@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cos.local/schemas/eval-result.json",
+  "title": "EvalResult",
+  "type": "object",
+  "required": ["run_id", "metric_name", "metric_value"],
+  "properties": {
+    "run_id": { "type": "string", "format": "uuid" },
+    "metric_name": { "type": "string" },
+    "metric_value": { "type": "number" },
+    "grader_type": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": true
+}

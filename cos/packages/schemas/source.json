@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cos.local/schemas/source.json",
+  "title": "Source",
+  "type": "object",
+  "required": ["id", "type", "created_at"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "type": {
+      "type": "string",
+      "enum": [
+        "note",
+        "transcript",
+        "webpage",
+        "video",
+        "audio",
+        "file",
+        "chat",
+        "repo",
+        "idea_fragment"
+      ]
+    },
+    "title": { "type": "string" },
+    "raw_text": { "type": "string" },
+    "source_uri": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "imported_at": { "type": "string", "format": "date-time" },
+    "author": { "type": "string" },
+    "reliability_score": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "additionalProperties": true
+}

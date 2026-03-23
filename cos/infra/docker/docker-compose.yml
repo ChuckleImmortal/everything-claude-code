@@ -1,0 +1,64 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cos-postgres
+    environment:
+      POSTGRES_USER: cos
+      POSTGRES_PASSWORD: cos
+      POSTGRES_DB: cos
+    ports:
+      - "5432:5432"
+    volumes:
+      - cos_pg_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cos -d cos"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  neo4j:
+    image: neo4j:5-community
+    container_name: cos-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/cos-neo4j-dev
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - cos_neo4j_data:/data
+
+  minio:
+    image: minio/minio:latest
+    container_name: cos-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio-secret-change-me
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - cos_minio_data:/data
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: cos-n8n
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=UTC
+    ports:
+      - "5678:5678"
+    volumes:
+      - cos_n8n_data:/home/node/.n8n
+    depends_on:
+      - postgres
+
+volumes:
+  cos_pg_data:
+  cos_neo4j_data:
+  cos_minio_data:
+  cos_n8n_data:

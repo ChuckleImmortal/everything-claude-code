@@ -1,0 +1,1 @@
+"""COS FastAPI application package."""

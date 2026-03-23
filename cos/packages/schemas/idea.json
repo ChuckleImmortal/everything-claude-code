@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cos.local/schemas/idea.json",
+  "title": "Idea",
+  "type": "object",
+  "required": ["id", "summary"],
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "summary": { "type": "string" },
+    "source_ids": {
+      "type": "array",
+      "items": { "type": "string", "format": "uuid" }
+    },
+    "captured_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": true
+}

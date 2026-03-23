@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cos.local/schemas/transcript.json",
+  "title": "Transcript",
+  "type": "object",
+  "required": ["source_id", "segments"],
+  "properties": {
+    "source_id": { "type": "string", "format": "uuid" },
+    "model": { "type": "string" },
+    "language": { "type": "string" },
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "start_ms": { "type": "integer" },
+          "end_ms": { "type": "integer" },
+          "speaker": { "type": "string" },
+          "text": { "type": "string" }
+        },
+        "required": ["text"]
+      }
+    }
+  },
+  "additionalProperties": true
+}
